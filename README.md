@@ -5,9 +5,9 @@ An html5 isometric game engine.
 
 Todo
 ----
-* Draw the staggered map
 * Scrollable map with mouse and keyboard
 * FPS counter
+* Preload image resources
 * Minimap
 * Trees
 * Unit Movement
@@ -20,3 +20,7 @@ Todo
 * Ranged Unit combat
 * Destroy castle walls
 * Units can dig in moats
+
+Done
+----
+* Draw the staggered map

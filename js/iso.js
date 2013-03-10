@@ -15,6 +15,11 @@ window.onload = function() {
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
     ];
 
@@ -51,11 +56,36 @@ window.onload = function() {
 
         console.log('X: ' + e.clientX + ' Y:' + e.clientY);
 
-        var tileX = Math.round(e.clientX / grass.width);
-        var tileY = Math.round(e.clientY / grass.height);
+        var hWidth = grass.width / 2;
+        var hHeight = grass.height / 2;
 
-        map[tileY][tileX] = 1;
-        console.log('(' + tileX + ', ' + tileY + ')');
+        var pX = e.clientX - hWidth;
+        var pY = e.clientY - hHeight;
+
+        console.log('pX: ' + pX + ' pY: ' + pY);
+
+        var x = Math.floor((pX + (pY - hHeight) * 2) / grass.width);
+        // x: 12 y: 25 is correct but x:12 y:26 is out
+        var y = Math.floor((pY - (pX - hWidth) * 0.5) / grass.height);
+
+        console.log('x: ' + x + ' y: ' + y);
+
+        var ty = y + x + 2 - 1;
+
+        var xOffset = 0;
+        if(ty % 2 != 0) {
+            xOffset = -1;
+        }
+        var tx = Math.floor((x - y) / 2) + 1 + xOffset;
+
+        console.log('tx: ' + tx + ' ty: ' + ty);
+
+        map[ty][tx] = !map[ty][tx];
         draw();
     }
-}
+
+    function tileToScreen(x, y) {
+        var screenX = grass.width * x;
+        var screenY = grass.height * y;
+    }
+};

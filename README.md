@@ -5,7 +5,9 @@ An html5 isometric game engine.
 
 Todo
 ----
-* Scrollable map with mouse and keyboard
+* Scrollable map with dragging mouse and arrow keys on keyboard
+  * Map should not scroll beyond bounds
+* Tile Picking
 * FPS counter
 * Preload image resources
 * Minimap

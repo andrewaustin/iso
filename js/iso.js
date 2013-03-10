@@ -83,9 +83,4 @@ window.onload = function() {
         map[ty][tx] = !map[ty][tx];
         draw();
     }
-
-    function tileToScreen(x, y) {
-        var screenX = grass.width * x;
-        var screenY = grass.height * y;
-    }
 };

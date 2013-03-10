@@ -47,7 +47,7 @@ window.onload = function() {
         Z: 90,
         X: 88,
         R: 82
-    }
+    };
 
     draw();
 
@@ -67,8 +67,8 @@ window.onload = function() {
                 var tilePosX = (x * grass.width) + xOffset;
                 var tilePosY = (y * grass.height) / 2;
 
-                tilePosX += scrollPosition.x
-                tilePosY += scrollPosition.y
+                tilePosX += scrollPosition.x;
+                tilePosY += scrollPosition.y;
 
                 if(map[y][x] == 0) {
                     ctx.drawImage(grass, Math.round(tilePosX), Math.round(tilePosY), grass.width, grass.height);

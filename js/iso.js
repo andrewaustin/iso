@@ -5,17 +5,21 @@ window.onload = function() {
     var grass = new Image();
     var dirt = new Image();
     var tree = new Image();
+    var water = new Image();
+    var hittest = new Image();
 
     grass.src = "images/grass.png";
     dirt.src = "images/dirt.png";
     tree.src = "images/tree.png";
+    water.src = "images/water.png";
+    hittest.src = "images/hittest.png";
 
     var scrollPosition = { x: 0, y: 0 };
 
     var map = [
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0 , 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
@@ -49,10 +53,26 @@ window.onload = function() {
         R: 82
     };
 
-    draw();
-
-    canvas.addEventListener('click', handleMouseClick, false);
-    window.addEventListener('keydown', handleKeyDown, false);
+    var hitTest = [];
+    hittest.onload = function() {
+        var offScreenCanvas = document.createElement('canvas');
+        var offctx = offScreenCanvas.getContext('2d');
+        offScreenCanvas.width = 128;
+        offScreenCanvas.height = 64;
+        offctx.clearRect(0, 0, 128, 64);
+        offctx.drawImage(hittest, 0, 0);
+        var imgData = offctx.getImageData(0, 0, 128, 64);
+        console.dir(imgData);
+        console.log('Length: ' + imgData.data.length);
+        var length = imgData.data.length;
+        for (var i = 3; i < length; i+=4) {
+            if(imgData.data[i] !== 0) {console.log(imgData.data[i]); }
+            hitTest[(i+1)/4] = imgData.data[i];
+        }
+        draw();
+        canvas.addEventListener('click', handleMouseClick, false);
+        window.addEventListener('keydown', handleKeyDown, false);
+    };
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -72,8 +92,10 @@ window.onload = function() {
 
                 if(map[y][x] == 0) {
                     ctx.drawImage(grass, Math.round(tilePosX), Math.round(tilePosY), grass.width, grass.height);
-                } else {
+                } else if (map[y][x] == 1) {
                     ctx.drawImage(dirt, Math.round(tilePosX), Math.round(tilePosY), grass.width, grass.height);
+                } else {
+                    ctx.drawImage(water, Math.round(tilePosX), Math.round(tilePosY), grass.width, grass.height);
                 }
             }
 
@@ -96,7 +118,7 @@ window.onload = function() {
             case Keys.LEFT:
             case Keys.A:
                 e.preventDefault();
-               scrollPosition.x += grass.width;
+                scrollPosition.x += grass.width;
                 break;
             case Keys.RIGHT:
             case Keys.D:
@@ -112,19 +134,21 @@ window.onload = function() {
         e.preventDefault();
 
         console.log('X: ' + e.clientX + ' Y:' + e.clientY);
+        var coords = worldToTilePos(e.clientX, e.clientY, scrollPosition);
+        console.log('X: ' + coords.x + ' Y:' + coords.y);
 
-        var hWidth = grass.width / 2;
+        /*var hWidth = grass.width / 2;
         var hHeight = grass.height / 2;
 
         var pX = e.clientX - hWidth;
         var pY = e.clientY - hHeight;
 
-        console.log('pX: ' + pX + ' pY: ' + pY);
+        //console.log('pX: ' + pX + ' pY: ' + pY);
 
         var x = Math.floor((pX + (pY - hHeight) * 2) / grass.width);
         var y = Math.floor((pY - (pX - hWidth) * 0.5) / grass.height);
 
-        console.log('x: ' + x + ' y: ' + y);
+        //console.log('x: ' + x + ' y: ' + y);
 
         // FIXME: ty is off sometimes:
         // http://gamedev.stackexchange.com/questions/38320/is-it-possible-to-map-mouse-coordinates-to-isometric-tiles-with-this-coordinate
@@ -137,10 +161,38 @@ window.onload = function() {
         }
 
         var tx = Math.floor((x + xOffset - y) / 2) + 1 ;
-
-        console.log('tx: ' + tx + ' ty: ' + ty);
-
-        map[ty][tx] = !map[ty][tx];
+        */
+        //console.log('tx: ' + tx + ' ty: ' + ty);
+        var ty = coords.y;
+        var tx = coords.x;
+        map[ty][tx] = 2;
         draw();
     }
+
+    function worldToTilePos(x, y, scrollPosition) {
+
+        var th = grass.height;
+        var tw = grass.width;
+        var eventilex = Math.floor(x % tw);
+        var eventiley = Math.floor(y % th);
+        console.log(eventilex + eventiley * tw);
+        console.log(hitTest[eventilex + eventiley * tw]);
+        var scrollOffsetY = scrollPosition.y / grass.height;
+        var scrollOffsetX = scrollPosition.x / grass.width;
+        if (hitTest[eventilex + eventiley * tw] === 255) {
+            /* On even tile */
+            console.log('even');
+            return {
+                x: Math.floor((x + tw) / tw) - 1 - scrollOffsetX,
+                y: 2 * (Math.floor((y + th) / th) - 1) - scrollOffsetY
+            };
+        } else {
+            /* On odd tile */
+            console.log('odd');
+            return {
+                x: Math.floor((x + tw / 2) / tw) - 1 - scrollOffsetX,
+                y: 2 * (Math.floor((y + th / 2) / th)) - 1 - scrollOffsetY
+            };
+        }
+    };
 };

@@ -171,6 +171,10 @@ window.onload = function() {
 
     function worldToTilePos(x, y, scrollPosition) {
 
+        // TODO: Perhaps since it's world to Tile and not screen to tile we need to convert ot canvas first.
+        // TODO: scrollOffsets are still off
+        // TODO: The code doesn't work anymore.
+
         var th = grass.height;
         var tw = grass.width;
         var eventilex = Math.floor(x % tw);
@@ -179,7 +183,7 @@ window.onload = function() {
         console.log(hitTest[eventilex + eventiley * tw]);
         var scrollOffsetY = scrollPosition.y / grass.height;
         var scrollOffsetX = scrollPosition.x / grass.width;
-        if (hitTest[eventilex + eventiley * tw] === 255) {
+        if (hitTest[eventilex + eventiley * tw] !== 255) {
             /* On even tile */
             console.log('even');
             return {
@@ -194,5 +198,5 @@ window.onload = function() {
                 y: 2 * (Math.floor((y + th / 2) / th)) - 1 - scrollOffsetY
             };
         }
-    };
+    }
 };

@@ -7,7 +7,8 @@ Todo
 ----
 * Scrollable map with dragging mouse and arrow keys on keyboard
   * Map should not scroll beyond bounds
-* Tile Picking
+  * Tile Picking should work when scrolled
+* Canvas should only draw viewable area or use two canvas for blitting.
 * FPS counter
 * Preload image resources
 * Minimap
@@ -26,3 +27,4 @@ Todo
 Done
 ----
 * Draw the staggered map
+* Tile Picking

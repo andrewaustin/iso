@@ -124,6 +124,26 @@ window.onload = function() {
                 break;
         }
 
+        console.log(map.length);
+        console.dir(scrollPosition.y);
+
+        // Don't scroll too far. It probably looks better if canvas.width % tile.width === 0.
+        if(scrollPosition.x < 0) {
+            scrollPosition.x = 0;
+        } else if(scrollPosition.x >= (map[0].length+1)*grass.width - canvas.width) {
+            scrollPosition.x = (map[0].length+1)*grass.width - canvas.width;
+        }
+
+        // No idea why its /4 but it works.
+        if(scrollPosition.y < 0) {
+            scrollPosition.y = 0;
+        } else if(scrollPosition.y >= (map.length*grass.height - canvas.height) / 4) {
+            scrollPosition.y = (map.length*grass.height - canvas.height) / 4;
+        }
+
+        console.log(map.length);
+        console.dir(scrollPosition.y);
+
         draw();
     }
 

@@ -10,7 +10,7 @@ Todo
   * Tile Picking should work when scrolled
 * Canvas should only draw viewable area or use two canvas for blitting.
 * FPS counter
-* Rewrite code not to be more engine like.
+* Rewrite code to be more engine like.
   * Preload image resources
 * Minimap
   * Scaled background canvas (inefficient?)

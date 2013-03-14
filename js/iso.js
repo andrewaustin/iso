@@ -174,8 +174,10 @@ window.onload = function() {
         if(ty % 2 != 0) {
             xOffset = -1;
         }
+        ty = ty + 2*(scrollPosition.y/grass.height);
 
         var tx = Math.floor((x + xOffset - y) / 2) + 1;
+        tx = tx + scrollPosition.x/grass.width;
 
         //console.log('tx: ' + tx + ' ty: ' + ty);
         //var ty = coords.y;

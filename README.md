@@ -11,7 +11,7 @@ Todo
   * Preload image resources
 * Minimap
   * Scaled background canvas (inefficient?)
-  * Render map array into small
+  * Render map array into small canvas
 * Trees
 * Unit Movement
 * A*

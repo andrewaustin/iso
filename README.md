@@ -5,9 +5,6 @@ An html5 isometric game engine.
 
 Todo
 ----
-* Scrollable map with arrow keys on keyboard
-  * Map should not scroll beyond bounds
-  * Tile Picking should work when scrolled
 * Canvas should only draw viewable area or use two canvas for blitting.
 * FPS counter
 * Rewrite code to be more engine like.
@@ -33,3 +30,6 @@ Done
 ----
 * Draw the staggered map
 * Tile Picking
+* Scrollable map with arrow keys on keyboard
+  * Map should not scroll beyond bounds
+  * Tile Picking should work when scrolled

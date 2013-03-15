@@ -148,6 +148,7 @@ window.onload = function() {
     }
 
     function handleMouseClick(e) {
+        console.log('click');
         e.preventDefault();
 
         //console.log('X: ' + e.clientX + ' Y:' + e.clientY);
@@ -174,11 +175,17 @@ window.onload = function() {
         if(ty % 2 != 0) {
             xOffset = -1;
         }
-        ty = ty + 2*(scrollPosition.y/grass.height);
 
         var tx = Math.floor((x + xOffset - y) / 2) + 1;
-        tx = tx + scrollPosition.x/grass.width;
 
+        // There seems to be a bug here if developer tools overlaps part of the canvas that causes tile picking to be off.
+        if(scrollPosition.y > 0) {
+            ty = ty + 2*Math.ceil(scrollPosition.y/grass.height);
+        }
+
+        if(scrollPosition.x > 0) {
+            tx = tx + Math.ceil(scrollPosition.x/grass.width);
+        }
         //console.log('tx: ' + tx + ' ty: ' + ty);
         //var ty = coords.y;
         //var tx = coords.x;

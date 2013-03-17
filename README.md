@@ -1,9 +1,17 @@
 iso
 ====
 
-An html5 isometric game engine.
+An html5 staggered isometric map.
 
-Todo
+Some images and ideas from from the book JavaScript: Making Isometric Social Real-Time Games with HTML5, CSS3 and
+Javascript (ISBN #978-1-4493-0475-1).
+
+Some code from random people on stack overflow:
+http://stackoverflow.com/questions/892811/drawing-isometric-game-worlds
+http://gamedev.stackexchange.com/questions/38320/is-it-possible-to-map-mouse-coordinates-to-isometric-tiles-with-this-coordinate
+http://gamedev.stackexchange.com/questions/45103/staggered-isometric-map-calculate-map-coordinates-for-point-on-screen
+
+Ideas
 ----
 * Canvas should only draw viewable area or use two canvas for blitting.
 * FPS counter

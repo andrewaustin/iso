@@ -6,13 +6,11 @@ window.onload = function() {
     var dirt = new Image();
     var tree = new Image();
     var water = new Image();
-    var hittest = new Image();
 
     grass.src = "images/grass.png";
     dirt.src = "images/dirt.png";
     tree.src = "images/tree.png";
     water.src = "images/water.png";
-    hittest.src = "images/hittest.png";
 
     var scrollPosition = { x: 0, y: 0 };
 
@@ -43,33 +41,8 @@ window.onload = function() {
         UP: 38,
         DOWN: 40,
         LEFT: 37,
-        RIGHT: 39,
-        W: 87,
-        A: 65,
-        S: 83,
-        D: 68,
-        Z: 90,
-        X: 88,
-        R: 82
+        RIGHT: 39
     };
-
-   /* var hitTest = [];
-    hittest.onload = function() {
-        var offScreenCanvas = document.createElement('canvas');
-        var offctx = offScreenCanvas.getContext('2d');
-        offScreenCanvas.width = 128;
-        offScreenCanvas.height = 64;
-        offctx.clearRect(0, 0, 128, 64);
-        offctx.drawImage(hittest, 0, 0);
-        var imgData = offctx.getImageData(0, 0, 128, 64);
-        console.dir(imgData);
-        console.log('Length: ' + imgData.data.length);
-        var length = imgData.data.length;
-        for (var i = 3; i < length; i+=4) {
-            if(imgData.data[i] !== 0) {console.log(imgData.data[i]); }
-            hitTest[(i+1)/4] = imgData.data[i];
-        }
-    };*/
 
     draw();
     canvas.addEventListener('click', handleMouseClick, false);
@@ -144,9 +117,9 @@ window.onload = function() {
     function handleMouseClick(e) {
         e.preventDefault();
 
-        //console.log('X: ' + e.clientX + ' Y:' + e.clientY);
-        //var coords = worldToTilePos(e.clientX, e.clientY, scrollPosition);
-        //console.log('X: ' + coords.x + ' Y:' + coords.y);
+        // SEE:
+        // http://gamedev.stackexchange.com/questions/38320/is-it-possible-to-map-mouse-coordinates-to-isometric-tiles-with-this-coordinate
+        // http://gamedev.stackexchange.com/questions/45103/staggered-isometric-map-calculate-map-coordinates-for-point-on-screen?lq=1
 
         var hWidth = grass.width / 2;
         var hHeight = grass.height / 2;
@@ -161,8 +134,6 @@ window.onload = function() {
 
         //console.log('x: ' + x + ' y: ' + y);
 
-        // http://gamedev.stackexchange.com/questions/38320/is-it-possible-to-map-mouse-coordinates-to-isometric-tiles-with-this-coordinate
-        // http://gamedev.stackexchange.com/questions/45103/staggered-isometric-map-calculate-map-coordinates-for-point-on-screen?lq=1
         var ty = y + x + 2 - 1;
         var xOffset = 0;
         if(ty % 2 != 0) {
@@ -179,38 +150,8 @@ window.onload = function() {
         if(scrollPosition.x > 0) {
             tx = tx + Math.ceil(scrollPosition.x/grass.width);
         }
-        //console.log('tx: ' + tx + ' ty: ' + ty);
-        //var ty = coords.y;
-        //var tx = coords.x;
+
         map[ty][tx] = 2;
         draw();
-    }
-
-    function worldToTilePos(x, y, scrollPosition) {
-        // TODO: The code doesn't work anymore.
-
-        var th = grass.height;
-        var tw = grass.width;
-        var eventilex = Math.floor(x % tw);
-        var eventiley = Math.floor(y % th);
-        console.log(eventilex + eventiley * tw);
-        console.log(hitTest[eventilex + eventiley * tw]);
-        var scrollOffsetY = scrollPosition.y / grass.height;
-        var scrollOffsetX = scrollPosition.x / grass.width;
-        if (hitTest[eventilex + eventiley * tw] !== 255) {
-            /* On even tile */
-            console.log('even');
-            return {
-                x: Math.floor((x + tw) / tw) - 1 - scrollOffsetX,
-                y: 2 * (Math.floor((y + th) / th) - 1) - scrollOffsetY
-            };
-        } else {
-            /* On odd tile */
-            console.log('odd');
-            return {
-                x: Math.floor((x + tw / 2) / tw) - 1 - scrollOffsetX,
-                y: 2 * (Math.floor((y + th / 2) / th)) - 1 - scrollOffsetY
-            };
-        }
     }
 };
